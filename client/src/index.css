@@ -1,0 +1,10 @@
+.isTruncated {
+  font-size: 20px !important;
+  /* position: relative;
+  bottom: 9px; */
+  display: inline-block;
+  width: 30%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
