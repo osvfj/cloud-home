@@ -73,7 +73,7 @@ export default function MenuOptions({ parent, newPath, isFile }) {
             });
           }}
         >
-          <Flex justifyContent='column' gap='1rem'>
+          <Flex gap='1rem'>
             <Input
               type='text'
               placeholder='Write here the name'

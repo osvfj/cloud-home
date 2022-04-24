@@ -15,3 +15,8 @@ export const renameFolderItem = async ({ path, name, update, isFile }) => {
 export const downloadFile = async (path) => {
   await file.download(path);
 };
+
+export const createFolder = async ({ path, name, update }) => {
+  await dir.create(path, name);
+  update();
+};
