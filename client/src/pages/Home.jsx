@@ -1,9 +1,9 @@
 import { useContext, useEffect } from 'react';
-import { PathContext } from '@/context';
+import { PathContext } from '../context/index';
 import { List } from '@chakra-ui/react';
-import { useGetFolderData } from '@/hooks/useDir';
+import { useGetFolderData } from '../hooks/useDir';
 
-import FolderItem from '@/components/FolderItem';
+import FolderItem from '../components/FolderItems/index';
 
 export default function Home() {
   const { currentPath, folderContent } = useContext(PathContext);

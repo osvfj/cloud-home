@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import { usePath } from '@/hooks/usePath';
+import { usePath } from '../hooks/usePath';
 
 export const PathContext = createContext();
 

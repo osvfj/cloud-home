@@ -1,9 +1,9 @@
 import { Flex, Button, Box, useDisclosure } from '@chakra-ui/react';
 import { MdAddCircleOutline } from 'react-icons/md';
 
-import AppRouter from '@/routers/AppRouter';
-import PathIndicator from '@/components/PathIndicator';
-import ModalActions from '@/components/ModalActions';
+import AppRouter from './routers/AppRouter';
+import PathIndicator from './components/PathIndicator';
+import ModalActions from './components/Modals/Actions/ModalActions';
 
 export default function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();

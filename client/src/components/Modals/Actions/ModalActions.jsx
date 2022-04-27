@@ -1,20 +1,22 @@
 import { useState } from 'react';
 import { Flex } from '@chakra-ui/react';
 
-import Modal from '@/components/Modal';
-import CreateDirForm from '@/components/CreateDirForm';
-import ModalActionsItems from '@/components/ModalActionsItems';
+import Modal from '../index';
+import CreateDirForm from './CreateDirForm';
+import ModalActionsItems from './ModalActionsItems';
 
 export default function ModalActions({ isOpen, onClose }) {
   const [showForm, setShowForm] = useState(false);
 
+  const handleOnClose = () => {
+    setShowForm(false);
+    return onClose();
+  };
+
   return (
     <Modal
       isOpen={isOpen}
-      onClose={() => {
-        setShowForm(false);
-        return onClose();
-      }}
+      onClose={handleOnClose}
       title='Select your action'
       marginTop='13rem'
     >

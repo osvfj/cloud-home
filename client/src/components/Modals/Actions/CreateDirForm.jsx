@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { createFolder } from '@/utils/folderItem.utils';
-import { usePath } from '@/hooks/usePath';
-import { useGetFolderData } from '@/hooks/useDir';
+import { createFolder } from '../../../utils/folderItem.utils';
+import { usePath } from '../../../hooks/usePath';
+import { useGetFolderData } from '../../../hooks/useDir';
 import { Flex, Button, Input } from '@chakra-ui/react';
 
 export default function CreateDirForm({ setShowForm, onClose }) {
@@ -17,7 +17,7 @@ export default function CreateDirForm({ setShowForm, onClose }) {
       update: getCurrentFolderData,
     });
     setShowForm(false);
-    onClose();
+    return onClose();
   };
 
   return (

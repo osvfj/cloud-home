@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import { PathContext } from '@/context';
+import { PathContext } from '../context/index';
 
-import api from '@/api';
+import api from '../api/index';
 const dir = api.dir();
 
 export const useGetFolderData = () => {

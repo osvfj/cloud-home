@@ -1,5 +1,5 @@
 import { Image } from '@chakra-ui/react';
-import Modal from './Modal';
+import Modal from '../index';
 
 export default function ModalPlayer({ isOpen, onClose, data, path }) {
   return (
