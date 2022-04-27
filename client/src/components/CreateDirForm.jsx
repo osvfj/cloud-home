@@ -7,14 +7,14 @@ import { Flex, Button, Input } from '@chakra-ui/react';
 export default function CreateDirForm({ setShowForm, onClose }) {
   const [folderName, setFolderName] = useState('');
   const { currentPath } = usePath();
-  const { getFolderData } = useGetFolderData();
+  const { getCurrentFolderData } = useGetFolderData();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     createFolder({
       path: currentPath,
       name: folderName,
-      update: getFolderData,
+      update: getCurrentFolderData,
     });
     setShowForm(false);
     onClose();

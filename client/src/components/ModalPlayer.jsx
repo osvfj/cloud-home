@@ -1,4 +1,4 @@
-import { AspectRatio, Image } from '@chakra-ui/react';
+import { Image } from '@chakra-ui/react';
 import Modal from './Modal';
 
 export default function ModalPlayer({ isOpen, onClose, data, path }) {
@@ -19,10 +19,15 @@ export default function ModalPlayer({ isOpen, onClose, data, path }) {
           <source src={`http://192.168.0.20:5000/api/files/?path=${path}`} />
         </audio>
       )}
-        {data.type === 'pdf' && (
-            <iframe width="100%"  height="1000vh" src={`http://192.168.0.20:5000/api/files/?path=${path}`}/>
-        )}
+      {data.type === 'pdf' && (
+        <iframe
+          width='100%'
+          height='1000vh'
+          src={`http://192.168.0.20:5000/api/files/?path=${path}`}
+        />
+      )}
 
+      {!data.type && <p>Unsupported file :(</p>}
     </Modal>
   );
 }

@@ -7,10 +7,10 @@ import FolderItem from '@/components/FolderItem';
 
 export default function Home() {
   const { currentPath, folderContent } = useContext(PathContext);
-  const { getFolderData } = useGetFolderData();
+  const { getCurrentFolderData } = useGetFolderData();
 
   useEffect(() => {
-    getFolderData();
+    getCurrentFolderData();
   }, [currentPath]);
 
   return (

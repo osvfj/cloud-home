@@ -8,7 +8,7 @@ import { usePath } from '@/hooks/usePath';
 
 export default function PathIndicator() {
   const { currentPath } = useContext(PathContext);
-  const { getFolderData } = useGetFolderData();
+  const { getCurrentFolderData } = useGetFolderData();
   const { setCurrentPath } = usePath();
   const [edit, setEdit] = useState(false);
   const [newPath, setNewPath] = useState(currentPath);
@@ -50,7 +50,7 @@ export default function PathIndicator() {
       </Box>
       <Box>
         <Icon as={MdArrowCircleUp} w='2rem' h='2rem' onClick={upFolder} />
-        <Icon as={MdRefresh} w='2rem' h='2rem' onClick={getFolderData} />
+        <Icon as={MdRefresh} w='2rem' h='2rem' onClick={getCurrentFolderData} />
       </Box>
     </Flex>
   );

@@ -7,10 +7,14 @@ const dir = api.dir();
 export const useGetFolderData = () => {
   const { setFolderContent, currentPath } = useContext(PathContext);
 
-  const getFolderData = async () => {
+  const getCurrentFolderData = async () => {
     const folder = await dir.get(currentPath);
     setFolderContent(folder);
   };
 
-  return { getFolderData };
+  const getFolderData = async (path) => {
+    return await dir.get(path);
+  };
+
+  return { getCurrentFolderData, getFolderData };
 };

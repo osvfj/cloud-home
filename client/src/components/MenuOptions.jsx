@@ -7,6 +7,7 @@ import {
   Button,
   IconButton,
   Input,
+  List,
   useDisclosure,
   AlertDialog,
   AlertDialogOverlay,
@@ -14,25 +15,60 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   AlertDialogContent,
+  Icon,
+  Box,
 } from '@chakra-ui/react';
-import { useRef, useState } from 'react';
-import { MdDelete, MdEdit, MdMenu, MdDownload } from 'react-icons/md';
-import { deleteFolderItem, renameFolderItem } from '@/utils/folderItem.utils';
+import { useEffect, useRef, useState } from 'react';
+import {
+  MdDelete,
+  MdEdit,
+  MdMenu,
+  MdDownload,
+  MdMoveToInbox,
+  MdArrowCircleUp,
+} from 'react-icons/md';
+import {
+  deleteFolderItem,
+  renameFolderItem,
+  moveFolderItem,
+} from '@/utils/folderItem.utils';
 import { useGetFolderData } from '@/hooks/useDir';
 import { downloadFile } from '@/utils/folderItem.utils';
 
 import Modal from './Modal';
+import FolderItem from '@/components/FolderItem';
 
 export default function MenuOptions({ parent, newPath, isFile }) {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const {
+    isOpen: isMoveOpen,
+    onClose: onCloseMove,
+    onOpen: onOpenMove,
+  } = useDisclosure();
   const {
     isOpen: isAlertOpen,
     onClose: onCloseAlert,
     onOpen: onOpenAlert,
   } = useDisclosure();
   const cancelRef = useRef();
-  const { getFolderData } = useGetFolderData();
+
+  const { getCurrentFolderData, getFolderData } = useGetFolderData();
   const [newName, setNewName] = useState(parent.name);
+  const [folderContent, setFolderContent] = useState();
+  const [currentPathNotQuery, setCurrentPathNoQuery] = useState('/');
+
+  useEffect(() => {
+    (async () => {
+      const folder = await getFolderData(currentPathNotQuery);
+      setFolderContent(folder);
+    })();
+  }, [currentPathNotQuery]);
+
+  const upFolder = () => {
+    const upPath = currentPathNotQuery.split('/').slice(0, -1).join('/');
+    setCurrentPathNoQuery(upPath);
+    console.log(upPath);
+  };
 
   return (
     <>
@@ -45,7 +81,7 @@ export default function MenuOptions({ parent, newPath, isFile }) {
         />
         <MenuList>
           <MenuItem icon={<MdEdit />} onClick={onOpen}>
-            Edit name
+            Rename
           </MenuItem>
           {isFile && (
             <MenuItem
@@ -55,11 +91,54 @@ export default function MenuOptions({ parent, newPath, isFile }) {
               Download
             </MenuItem>
           )}
+          <MenuItem icon={<MdMoveToInbox />} onClick={onOpenMove}>
+            Move
+          </MenuItem>
           <MenuItem icon={<MdDelete />} onClick={onOpenAlert}>
             Delete
           </MenuItem>
         </MenuList>
       </Menu>
+
+      <Modal
+        isOpen={isMoveOpen}
+        onClose={() => {
+          setCurrentPathNoQuery('/');
+          return onCloseMove();
+        }}
+        title='Choose the dst'
+        footer={
+          <Flex justifyContent='space-between' w='100%'>
+            <Icon as={MdArrowCircleUp} w='2rem' h='2rem' onClick={upFolder} />
+            <Button
+              colorScheme='blue'
+              onClick={() => {
+                moveFolderItem({
+                  path: newPath,
+                  dstPath: currentPathNotQuery,
+                  isFile,
+                  update: getCurrentFolderData,
+                });
+                onCloseMove();
+              }}
+            >
+              Move!
+            </Button>
+          </Flex>
+        }
+      >
+        <List w={'100%'}>
+          {folderContent?.folders.map((folder) => (
+            <FolderItem
+              data={folder}
+              key={folder.name}
+              isNotPathBased
+              setCurrentPathNotQuery={setCurrentPathNoQuery}
+              currentPathNotQuery={currentPathNotQuery}
+            />
+          ))}
+        </List>
+      </Modal>
 
       <Modal isOpen={isOpen} onClose={onClose} title='Write the new name!'>
         <form
@@ -68,7 +147,7 @@ export default function MenuOptions({ parent, newPath, isFile }) {
             renameFolderItem({
               path: newPath,
               name: newName,
-              update: getFolderData,
+              update: getCurrentFolderData,
               isFile,
             });
           }}
@@ -111,7 +190,7 @@ export default function MenuOptions({ parent, newPath, isFile }) {
                 onClick={() => {
                   deleteFolderItem({
                     path: newPath,
-                    update: getFolderData,
+                    update: getCurrentFolderData,
                     isFile,
                   });
                   onCloseAlert();

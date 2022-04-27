@@ -27,7 +27,7 @@ class API {
 
     const move = async (path, newPath) =>
       await this.apiCall(() =>
-        this.api.put(`/dir/move`, { path, dst: newPath })
+        this.api.put(`/dir/move?path=${path}&dst=${newPath}`)
       );
 
     const rename = async (path, name) =>
@@ -67,7 +67,7 @@ class API {
 
     const move = async (path, newPath) => {
       return await this.apiCall(() =>
-        this.api.put(`/files/move`, { path, dst: newPath })
+        this.api.put(`/files/move?path=${path}&dst=${newPath}`)
       );
     };
 

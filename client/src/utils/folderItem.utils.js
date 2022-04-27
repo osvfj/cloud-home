@@ -20,3 +20,8 @@ export const createFolder = async ({ path, name, update }) => {
   await dir.create(path, name);
   update();
 };
+
+export const moveFolderItem = async ({ path, dstPath, isFile, update }) => {
+  isFile ? await file.move(path, dstPath) : await dir.move(path, dstPath);
+  update();
+};

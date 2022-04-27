@@ -29,14 +29,14 @@ const getDirData = async (req = request, res = response) => {
           name: dirent.name,
           size: pathStats.size,
           created_at: pathStats.birthtime,
-          last_time_opened: pathStats.mtime
+          last_time_opened: pathStats.mtime,
         });
       } else {
         const file = {
           name: dirent.name,
           size: pathStats.size,
           created_at: pathStats.birthtime,
-          last_time_opened: pathStats.mtime
+          last_time_opened: pathStats.mtime,
         };
 
         const ext = dirent.name.split('.').pop();
@@ -89,7 +89,7 @@ const move = async (req = request, res = response) => {
 };
 
 const rename = async (req = request, res = response) => {
-  const { name, path } = req.body ||= req.query;
+  const { name, path } = (req.body ||= req.query);
 
   try {
     const stats = await fs.lstat(`${HOME_DIR_CLOUD}/${path}`);
@@ -131,7 +131,7 @@ const createDir = async (req = request, res = response) => {
 const deleteDir = async (req = request, res = response) => {
   const { path } = req.query || req.body;
   try {
-    await fs.rmdir(`${HOME_DIR_CLOUD}/${path}`);
+    await fs.rm(`${HOME_DIR_CLOUD}/${path}`, { recursive: true, force: true });
     res.json({ message: 'Dir deleted successfully' });
   } catch (error) {
     res.status(404).json({ error: error.message });
