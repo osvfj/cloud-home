@@ -3,7 +3,7 @@ import axios from 'axios';
 class API {
   constructor() {
     this.api = axios.create({
-      baseURL: 'http://192.168.0.20:5000/api',
+      baseURL: import.meta.env.VITE_API_URL,
     });
   }
 
@@ -72,10 +72,7 @@ class API {
     };
 
     const download = async (path) => {
-      /* return await this.apiCall(() =>
-        this.api.get(`/files/download?path=${path}`)
-      ); */
-      window.open(`http://192.168.0.20:5000/api/files/download?path=${path}`)
+      window.open(`${import.meta.env.VITE_APP_URL}files/download?path=${path}`)
     };
 
     return {
