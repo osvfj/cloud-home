@@ -7,11 +7,12 @@ const {
   rename,
   deleteDir,
 } = require('../controllers/dir.controller');
+const authorization = require('../middlewares/authorization');
 
-router.get('/', getDirData);
-router.put('/move', move);
-router.post('/create', createDir);
-router.put('/rename', rename);
-router.delete('/delete', deleteDir);
+router.get('/', [authorization], getDirData);
+router.put('/move', [authorization], move);
+router.post('/create', [authorization], createDir);
+router.put('/rename', [authorization], rename);
+router.delete('/delete', [authorization], deleteDir);
 
 module.exports = router;

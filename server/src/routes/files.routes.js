@@ -1,13 +1,18 @@
 const router = require('express').Router();
 const { rename, move } = require('../controllers/dir.controller');
-const { upload, getFile, download, deleteFile } = require('../controllers/files.controller');
+const {
+  upload,
+  getFile,
+  download,
+  deleteFile,
+} = require('../controllers/files.controller');
+const authorization = require('../middlewares/authorization');
 
-
-router.get('/', getFile)
-router.post('/upload', upload)
-router.get('/download', download)
-router.put('/rename', rename)
-router.put('/move', move)
-router.delete('/delete', deleteFile)
+router.get('/', [authorization], getFile);
+router.post('/upload', [authorization], upload);
+router.get('/download', [authorization], download);
+router.put('/rename', [authorization], rename);
+router.put('/move', [authorization], move);
+router.delete('/delete', [authorization], deleteFile);
 
 module.exports = router;
