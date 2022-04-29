@@ -4,6 +4,9 @@ class API {
   constructor() {
     this.api = axios.create({
       baseURL: import.meta.env.VITE_API_URL,
+      headers: {
+        authorization: localStorage.getItem('ACCT'),
+      },
     });
   }
 
@@ -72,7 +75,7 @@ class API {
     };
 
     const download = async (path) => {
-      window.open(`${import.meta.env.VITE_APP_URL}files/download?path=${path}`)
+      window.open(`${import.meta.env.VITE_APP_URL}files/download?path=${path}`);
     };
 
     return {
@@ -82,6 +85,24 @@ class API {
       rename,
       move,
       download,
+    };
+  }
+
+  auth() {
+    const login = async (formData) =>
+      await this.apiCall(async () => {
+        const data = await this.api.post('/auth/login', formData);
+        this.api = axios.create({
+          baseURL: import.meta.env.VITE_API_URL,
+          headers: {
+            authorization: data.data.accessToken,
+          },
+        });
+        return data;
+      });
+
+    return {
+      login,
     };
   }
 }

@@ -28,7 +28,7 @@ export default function PathIndicator() {
   };
 
   return (
-    <Flex bg='green.500' justifyContent='space-between' padding='0.8rem'>
+    <Flex bg='green.500' justifyContent='space-between' padding='0.8rem' w="100%">
       <Box onDoubleClick={() => setEdit(!edit)}>
         {edit && (
           <form onSubmit={handleSubmit}>

@@ -2,30 +2,31 @@ import { Image } from '@chakra-ui/react';
 import Modal from '../index';
 
 const api = import.meta.env.VITE_API_URL
+const token = localStorage.getItem('ACCT')
 
 export default function ModalPlayer({ isOpen, onClose, data, path }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={data.name}>
       {data.type === 'video' && (
         <video width='100%' height='140' controls>
-          <source src={`${api}/files/?path=${path}`} />
+          <source src={`${api}/files/?path=${path}&token=${token}`} />
         </video>
       )}
 
       {data.type === 'image' && (
-        <Image src={`${api}/files/?path=${path}`} />
+        <Image src={`${api}/files/?path=${path}&token=${token}`} />
       )}
 
       {data.type === 'audio' && (
         <audio controls style={{ width: '100%', borderRadius: '10px' }}>
-          <source src={`${api}/files/?path=${path}`} />
+          <source src={`${api}/files/?path=${path}&token=${token}`} />
         </audio>
       )}
       {data.type === 'pdf' && (
         <iframe
           width='100%'
           height='1000vh'
-          src={`${api}/files/?path=${path}`}
+          src={`${api}/files/?path=${path}&token=${token}`}
         />
       )}
 
