@@ -6,7 +6,7 @@ const {
 const authorization = require('../middlewares/authorization');
 
 router.post('/login', login);
-router.get('/refresh', [authorization], refreshTokens);
+router.get('/refresh', refreshTokens);
 // router.post('/register', register);
 
 module.exports = router;

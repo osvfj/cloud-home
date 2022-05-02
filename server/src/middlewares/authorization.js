@@ -17,7 +17,7 @@ const authorization = async (req, res, next) => {
 
     return next();
   } catch (error) {
-    return res.status(500).json({
+    return res.status(error.status).json({
       msg: error.message,
     });
   }

@@ -1,4 +1,4 @@
-const { JWT_ACCESS_TOKEN } = require('../config');
+const { JWT_REFRESH_TOKEN } = require('../config');
 const { createTokens, verifyToken } = require('../helpers/jwt_tokens');
 const User = require('../models/User');
 
@@ -57,10 +57,16 @@ const register = async (req, res) => {
 };
 
 const refreshTokens = async (req, res) => {
-  const token = req.headers['authorization'];
+  const token = req.headers['x-refresh-token'];
+
+  if(!token){
+    return res.json({
+      msg: 'No token provided'
+    })
+  }
 
   try {
-    const { id } = await verifyToken(token, JWT_ACCESS_TOKEN);
+    const { id } = await verifyToken(token, JWT_REFRESH_TOKEN);
     if (id) {
       const { accessToken, refreshToken } = await createTokens(id);
       return res.json({
