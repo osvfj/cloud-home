@@ -1,10 +1,16 @@
 import { Image } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import Modal from '../index';
 
-const api = import.meta.env.VITE_API_URL
-const token = localStorage.getItem('ACCT')
+const api = import.meta.env.VITE_API_URL;
 
 export default function ModalPlayer({ isOpen, onClose, data, path }) {
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    setToken(localStorage.getItem('ACCT'));
+  }, []);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={data.name}>
       {data.type === 'video' && (

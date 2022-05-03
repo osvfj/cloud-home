@@ -14,7 +14,34 @@ class API {
     try {
       return (await request()).data;
     } catch (e) {
-      return e.response.data;
+      if (e.response.status === 401) {
+        try {
+          const { data } = await this.api.get('/auth/refresh', {
+            headers: {
+              'x-refresh-token': localStorage.getItem('RFT'),
+            },
+          });
+
+          if (data.accessToken !== undefined) {
+            localStorage.setItem('ACCT', data.accessToken);
+            localStorage.setItem('RFT', data.refreshToken);
+          }
+
+          this.api = axios.create({
+            baseURL: import.meta.env.VITE_API_URL,
+            headers: {
+              authorization: localStorage.getItem('ACCT'),
+            },
+          });
+
+          return (await request()).data;
+        } catch (e) {
+          if(e.response.status === 500){
+            localStorage.clear()
+            window.history.go('/login')
+          }
+        }
+      }
     }
   }
 
@@ -75,7 +102,7 @@ class API {
     };
 
     const download = async (path) => {
-      window.open(`${import.meta.env.VITE_APP_URL}files/download?path=${path}`);
+      window.open(`${import.meta.env.VITE_API_URL}/files/download?path=${path}&token=${localStorage.getItem('ACCT')}`);
     };
 
     return {
