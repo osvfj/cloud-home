@@ -1,10 +1,21 @@
 .isTruncated {
-  font-size: 20px !important;
-  /* position: relative;
-  bottom: 9px; */
+  font-size: 19px !important;
   display: inline-block;
-  width: 30%;
+  width: 70%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 720px) {
+  .isTruncated {
+    width: 7rem;
+  }
+}
+
+@media screen and (min-width: 420px) {
+  .isTruncated {
+    position: relative;
+    bottom: 5px;
+  }
 }
