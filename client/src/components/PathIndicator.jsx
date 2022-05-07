@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Box, Icon, Heading, Flex, Input } from '@chakra-ui/react';
 import { MdArrowCircleUp, MdRefresh } from 'react-icons/md';
@@ -22,14 +21,24 @@ export default function PathIndicator() {
     setCurrentPath({ path });
   };
 
+  const goToPath = (index) => {
+    setCurrentPath({ path: parsePath.slice(0, index + 1).join('/') });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setCurrentPath({ path: newPath });
   };
 
   return (
-    <Flex bg='green.500' justifyContent='space-between' padding='0.8rem' w="100%">
-      <Box onDoubleClick={() => setEdit(!edit)}>
+    <Flex
+      bg='green.500'
+      justifyContent='space-between'
+      padding='0.8rem'
+      w='100%'
+      onDoubleClick={() => setEdit(!edit)}
+    >
+      <Box>
         {edit && (
           <form onSubmit={handleSubmit}>
             <Input
@@ -41,7 +50,9 @@ export default function PathIndicator() {
         {!edit &&
           parsePath.map((path, i) => (
             <Heading as='span' size='lg' fontSize='20px' key={i}>
-              <Link to={`?path=${path}`}>{path}</Link>
+              <p style={{ display: 'inline' }} onClick={() => goToPath(i)}>
+                {path}
+              </p>
               {'>'}
             </Heading>
           ))}

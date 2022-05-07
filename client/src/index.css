@@ -19,3 +19,7 @@
     bottom: 5px;
   }
 }
+
+* {
+  cursor: pointer!important;
+}
