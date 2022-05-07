@@ -23,7 +23,18 @@ export default function FolderItem({
     <Flex justifyContent='space-between'>
       <Box w='100%'>
         {isFile ? (
-          <File onOpen={onOpen} file={data} />
+          <>
+            <File onOpen={onOpen} file={data} />
+            {isOpen && (
+              <ModalPlayer
+                isOpen={isOpen}
+                onClose={onClose}
+                isFile={isFile}
+                data={data}
+                path={newPath}
+              />
+            )}
+          </>
         ) : (
           <Folder
             path={newPath}
@@ -38,13 +49,6 @@ export default function FolderItem({
         {!isNotPathBased && (
           <MenuOptions parent={data} newPath={newPath} isFile={isFile} />
         )}
-        <ModalPlayer
-          isOpen={isOpen}
-          onClose={onClose}
-          isFile={isFile}
-          data={data}
-          path={newPath}
-        />
       </Box>
     </Flex>
   );

@@ -1,6 +1,5 @@
 import { Flex } from '@chakra-ui/react';
 import AppRouter from './routers/AppRouter';
-import AuthRouter from './routers/AuthRouter';
 
 export default function App() {
   return (
@@ -12,7 +11,6 @@ export default function App() {
       flexDirection='column'
     >
       <AppRouter />
-      <AuthRouter />
     </Flex>
   );
 }
